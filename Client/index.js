@@ -1,13 +1,14 @@
 var express=require('express');
 var parser=require('body-parser');
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var app=express();
 app.set('view engine', 'ejs');											//Choix de ejs comme moteur de template
 app.use(express.static(__dirname + '/public'));			//Permet de rendre un répertoire public afin de pouvoir y lire les fichier js et css
 app.use(parser.urlencoded({ extended: true }));			//Autorise le découpage de l'url
 app.use(parser.json());															//Autorise le découpage de json
 
-var tags=[];
-const invocation = new XMLHttpRequest();
+var tags;
+const invocation =new XMLHttpRequest();
 
 function handler(evtXHR){
   if (invocation.readyState == 4){
@@ -47,10 +48,10 @@ app.get('/',function(req,res){
 });
 
 app.get('/createToDo',function(req,res){
+  getAllTags();
 
 
-
-  res.render('create',{tags: tags});
+  res.render('create',{'tags': tags});
 });
 
 app.get('/showToDo',function(req,res){
