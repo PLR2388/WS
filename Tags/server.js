@@ -4,8 +4,8 @@ const parser = require('body-parser');
 app.use(parser.urlencoded({ extended: false }));
 app.use(parser.json());
 
-var data=[{"id": "0", "title": "Finir le projet JEE","dateBegin": "20/03/2018", "dateEnd": "11/04/2018", "statut": "En cours", "tags" : "travail" },
-{"id": "1", "title": "Réviser pour le DS d'IA","dateBegin": "10/04/2018", "dateEnd": "11/04/2018", "statut": "En cours", "tags" : "travail" }];
+var data=[{"id": "0", "name": "travail" },
+{"id": "1", "name": "loisir" }];
 
 var current=2;  //Correspond à l'ID en cours qui s'incrémente quand l'utilisateur ajoute un élément*
 
@@ -29,13 +29,9 @@ app.get('/',function(req,res){
 * Ajout d'un élément dans la todo en récupérant des éléments dans le corps de la requête
 */
 app.post('/',function(req,res){
-let title=req.body.title;
-let dateBegin=req.body.dateBegin;
-let dateEnd=req.body.dateEnd;
-let statut=req.body.statut;
-let tags=req.body.tags;
-if(title!=undefined && dateBegin!=undefined && dateEnd!=undefined && statut!=undefined && tags!=undefined){
-  let json={"id":current.toString(),"title":title, "dateBegin":dateBegin, "dateEnd": dateEnd, "statut": statut, "tags":tags};
+let name=req.body.name;
+if(name!=undefined){
+  let json={"id":current.toString(),"name":name};
   current++;
   data.push(json);
   res.send("DONE");
@@ -56,7 +52,7 @@ app.delete('/:id',function(req,res){
   }
 });
 if(pos!=-1){
-  data.splice(pos, 1);
+  data.splice(pos, 1);  //Supprime 1 élément à partir de la position pos
   res.send("SUCCESS");
 }
 else{
@@ -67,7 +63,7 @@ else{
 /**
 * Modification d'un ou plusieurs éléments du todo dont l'id est précisé dans l'URI
 */
-app.put('/todo/:id',function(req,res){
+app.put('/:id',function(req,res){
   let pos=-1;
   data.forEach(function(item, index, array) {
   if(item.id==req.params.id){
@@ -75,25 +71,9 @@ app.put('/todo/:id',function(req,res){
   }
 });
 if(pos!=-1){
-  let title=req.body.title;
-  let dateBegin=req.body.dateBegin;
-  let dateEnd=req.body.dateEnd;
-  let statut=req.body.statut;
-  let tags=req.body.tags;
-  if(title!=undefined){
-    data[pos].title=title;
-  }
-  if(dateBegin!=undefined){
-    data[pos].dateBegin=dateBegin;
-  }
-  if(dateEnd!=undefined){
-    data[pos].dateEnd=dateEnd;
-  }
-  if(statut!=undefined){
-    data[pos].statut=statut;
-  }
-  if(tags!=undefined){
-    data[pos].tags=tags;
+  let name=req.body.name;
+  if(name!=undefined){
+    data[pos].name=name;
   }
   res.send("SUCCESS");
 }
