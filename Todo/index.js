@@ -4,8 +4,8 @@ const parser = require('body-parser');
 app.use(parser.urlencoded({ extended: false }));
 app.use(parser.json());
 
-var data=[{"id": "0", "title": "Finir le projet JEE","dateBegin": "20/03/2018", "dateEnd": "11/04/2018", "statut": "En cours", "tags" : "travail" },
-{"id": "1", "title": "Réviser pour le DS d'IA","dateBegin": "10/04/2018", "dateEnd": "11/04/2018", "statut": "En cours", "tags" : "travail" }];
+var data=[{"id": "0", "title": "Finir le projet JEE","dateBegin": "20/03/2018", "dateEnd": "11/04/2018", "tags" : "travail" },
+{"id": "1", "title": "Réviser pour le DS d'IA","dateBegin": "10/04/2018", "dateEnd": "11/04/2018", "tags" : "travail" }];
 
 var current=2;  //Correspond à l'ID en cours qui s'incrémente quand l'utilisateur ajoute un élément*
 
@@ -32,10 +32,11 @@ app.post('/todo',function(req,res){
 let title=req.body.title;
 let dateBegin=req.body.dateBegin;
 let dateEnd=req.body.dateEnd;
-let statut=req.body.statut;
+let statut="en cours"
 let tags=req.body.tags;
+console.log("title if find="+title);
 if(title!=undefined && dateBegin!=undefined && dateEnd!=undefined && statut!=undefined && tags!=undefined){
-  let json={"id":current.toString(),"title":title, "dateBegin":dateBegin, "dateEnd": dateEnd, "statut": statut, "tags":tags};
+  let json={"id":current.toString(),"title":title, "dateBegin":dateBegin, "dateEnd": dateEnd, "tags":tags};
   current++;
   data.push(json);
   res.send("DONE");
@@ -105,3 +106,4 @@ else{
 
 
 app.listen(8080);
+console.log("Listening on 8080/todo")

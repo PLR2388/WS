@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Here's your todos</title>
+  </head>
+  <body>
+  <table>
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Date_de_Début</th>
+        <th>Date_de_Fin</th>
+        <th>Catégorie</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% todos.forEach(function(todo){ %>
+          <tr>
+            <td><%=todo.title%></td>
+            <td><%=todo.dateBegin%></td>
+            <td><%=todo.dateEnd%></td>
+            <td><%=todo.tags%></td>
+          </tr>
+          <% }); %>
+    </tbody>
+  </table>
+
+  <br>
+  <form action="/" method='get'>
+    <input type="submit" name="" value="retour">
+  </form>
+
+  </body>
+</html>

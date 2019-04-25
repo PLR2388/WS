@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Delete a todo</title>
+  </head>
+  <body>
+    <form  action="deleteToDo" method="post">
+    <label for="todo">Choisissez la tâche à supprimer :</label>
+  <select id="todo" name="todo">
+    <% todos.forEach(function(todo){ %>
+				<option value="<%=todo.id%>"><%=todo.title%></option>
+				<% }); %>
+  </select>
+  <input type="submit" name="" value="Valider">
+  </form>
+  <br>
+  <form action="/" method='get'>
+    <input type="submit" name="" value="retour">
+  </form>
+
+  </body>
+</html>

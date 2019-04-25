@@ -1,5 +1,5 @@
-var idcompteur=0;
-class todo{
+var idcompteur=1;
+class Todo{
 /**
 * Permet de créer une tâche
 * @constructor
@@ -64,4 +64,4 @@ setTags(tags) {
 
 }
 
-module.exports=todo;
+module.exports=Todo;

@@ -6,15 +6,15 @@
     <title>Create Your Todo</title>
   </head>
   <body>
-    <form action="todo" method="POST">
+    <form action="createToDo" method="POST">
   <label for="name">Titre de la tâche:</label>
-  <input id="name" type="text" required>
+  <input id="name" type="text" name="name" required>
   <br>
   <label for="begin">Début de la tâche:</label>
-  <input type="date" id="begin" required>
+  <input type="date" id="begin" name="begin" required>
   <br>
   <label for="end">Fin de la tâche:</label>
-  <input type="date" id="end" required>
+  <input type="date" id="end" name="end" required>
   <br>
   <label for="tags">Catégorie:</label>
   <select id="tags" name="tags">
@@ -23,9 +23,10 @@
 				<% }); %>
   </select>
   <br>
-  <input type="submit" name="" value="Submit">
+  <input type="submit" name="" value="Valider">
   </form>
-
-  <script src="js/proxyClient.js"></script>
+  <form action="/" method="get">
+    <input type="submit" name="" value="retour">
+  </form>
   </body>
 </html>

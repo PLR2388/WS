@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Modify this Todo</title>
+  </head>
+  <body>
+    <form action="updateToDoForm" method="post">
+      <p>Ancien nom :</p>
+      <%=todo.title%>
+      <br>
+      <label for="title">Nouveau nom: </label>
+      <input type="text" name="title" value="" id="title">
+      <p>Ancienne date de début :</p>
+      <%=todo.dateBegin%>
+      <br>
+      <label for="dateBegin">Nouvelle date de début: </label>
+      <input type="date" name="dateBegin" value="" id="dateBegin">
+      <p>Ancienne date de fin :</p>
+      <%=todo.dateEnd%>
+      <br>
+      <label for="dateEnd">Nouvelle date de fin: </label>
+      <input type="date" name="dateEnd" value="" id="dateEnd">
+      <p>Ancienne catégorie :</p>
+      <%=todo.tags%>
+      <br>
+      <label for="tags">Nouvelle catégorie : </label>
+      <select id="tags" name="tags">
+        <% tags.forEach(function(tag){ %>
+            <option value="<%=tag.id%>"><%=tag.name%></option>
+            <% }); %>
+      </select>
+      <br>
+      <input type="submit" name="" value="Valider">
+    </form>
+    <form action="updateToDo" method="get">
+      <input type="submit" name="" value="retour">
+    </form>
+  </body>
+</html>
