@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Delete a tag</title>
+  </head>
+  <body>
+    <form  action="deleteTags" method="post">
+    <label for="tag">Choisissez la catégorie à supprimer :</label>
+  <select id="tag" name="tag">
+    <% tags.forEach(function(tag){ %>
+				<option value="<%=tag.id%>"><%=tag.name%></option>
+				<% }); %>
+  </select>
+  <input type="submit" name="" value="Valider">
+  </form>
+  <br>
+  <form action="/" method='get'>
+    <input type="submit" name="" value="retour">
+  </form>
+
+  </body>
+</html>

@@ -104,6 +104,30 @@ function createAToDo(title,dateBegin,dateEnd,tags){
     console.error("No Invocation TookPlace At All");
   }
 }
+
+function createATag(title){
+  if(invocation){
+    let tag={name: title };
+    invocation.open('POST', 'http://localhost:3030', true);
+    invocation.setRequestHeader('Content-Type', 'application/json');
+    invocation.onreadystatechange = handlerTags;
+    invocation.send(JSON.stringify(task));
+  }else{
+    console.error("No Invocation TookPlace At All");
+  }
+}
+
+function getATag(id){
+  if(invocation){
+    console.log('http://localhost:3030/'+id);
+    invocation.open('GET', 'http://localhost:3030/'+id, true);
+    invocation.onreadystatechange = handlerTags;
+    invocation.send(null);
+  }else{
+    console.error("No Invocation TookPlace At All");
+  }
+}
+
 app.get('/',function(req,res){
   res.render('main');
 });
@@ -148,9 +172,44 @@ app.get('/deleteToDo',function(req,res){
 app.post('/deleteToDo',function(req,res){ //Fonctionne
   deleteAToDo(req.body.todo);
   res.render('deleteSuccess');
-
-
 });
+
+app.get('/createTags',function(req,res){
+res.render('createTags');
+});
+
+app.post('/createTags',function(req,res){
+  createATag(req.body.title);
+  res.render('createTagsSuccess');
+});
+
+app.get('/showTags',function(req,res){
+  getAllTags();
+  res.render('showTags',{'tags': tags});
+});
+
+app.get('/updateTags',function(req,res){
+  getAllTags();
+  res.render('modifyTag',{'tags':tags});
+});
+
+app.post('/updateTagForm',function(req,res){
+  let id=req.body.tag;
+  console.log("id="+id);
+  getATag(id);
+  res.render('modifyOneTag',{'tag':tags});
+});
+
+app.get('/deleteTags',function(req,res){
+  getAllTags();
+res.render('deleteTag',{'tags':tags});
+});
+
+app.post('/deleteTags',function(req,res){ //Fonctionne
+  deleteAToDo(req.body.tag);
+  res.render('deleteTagSuccess');
+});
+
 
 app.listen(3031);
 console.log("Listening on 3031")

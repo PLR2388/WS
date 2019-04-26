@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Here's your tags</title>
+  </head>
+  <body>
+  <table>
+    <thead>
+      <tr>
+        <th>Nom</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% tags.forEach(function(tag){ %>
+          <tr>
+            <td><%=tag.name%></td>
+          </tr>
+          <% }); %>
+    </tbody>
+  </table>
+
+  <br>
+  <form action="/" method='get'>
+    <input type="submit" name="" value="retour">
+  </form>
+
+  </body>
+</html>

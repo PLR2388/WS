@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Modify this Todo</title>
+  </head>
+  <body>
+    <form action="updateTagForm" method="post">
+      Ancien nom :
+      <%=tag.name%>
+      <br>
+      <label for="name">Nouveau nom: </label>
+      <input type="text" name="name" value="" id="name">
+      <input type="submit" name="" value="Valider">
+    </form>
+    <form action="updateTags" method="get">
+      <input type="submit" name="" value="retour">
+    </form>
+  </body>
+</html>
