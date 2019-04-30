@@ -9,16 +9,16 @@ app.use(parser.json());															//Autorise le découpage de json
 
 var tags={};
 var todo={};
-const invocation =new XMLHttpRequest();
+var invocation =new XMLHttpRequest();
 
 function handlerTags(evtXHR){
   if (invocation.readyState == 4){
     if (invocation.status == 200){
 
 	try{
-      		let response = JSON.parse(invocation.responseText);
-          tags=response;
-		console.log(response);
+      	let response = JSON.parse(invocation.responseText);
+        tags=response;
+		    console.log(response);
 	}catch(err){
 		console.log("invocation.responseText "+invocation.responseText);
 	}
@@ -52,8 +52,9 @@ function handlerTodos(evtXHR){
 }
 
 function getAllTags(){
+  //var invocation =new XMLHttpRequest();
   if(invocation){
-    invocation.open('GET', 'http://localhost:3030/', true);
+    invocation.open('GET', 'http://localhost:3030/', false);
     invocation.onreadystatechange = handlerTags;
     invocation.send(null);
   }else{
@@ -62,8 +63,9 @@ function getAllTags(){
 }
 
 function getAllToDo(){
+  var invocation =new XMLHttpRequest();
   if(invocation){
-    invocation.open('GET', 'http://localhost:8080/todo', true);
+    invocation.open('GET', 'http://localhost:8080/todo', false);
     invocation.onreadystatechange = handlerTodos;
     invocation.send(null);
   }else{
@@ -72,6 +74,7 @@ function getAllToDo(){
 }
 
 function getAToDo(id){
+  var invocation =new XMLHttpRequest();
   if(invocation){
     console.log('http://localhost:8080/todo/'+id);
     invocation.open('GET', 'http://localhost:8080/todo/'+id, true);
@@ -83,6 +86,7 @@ function getAToDo(id){
 }
 
 function deleteAToDo(id){
+  var invocation =new XMLHttpRequest();
   if(invocation){
     console.log('http://localhost:8080/todo/'+id);
     invocation.open('DELETE', 'http://localhost:8080/todo/'+id, true);
@@ -94,6 +98,7 @@ function deleteAToDo(id){
 }
 
 function createAToDo(title,dateBegin,dateEnd,tags){
+  var invocation =new XMLHttpRequest();
   if(invocation){
     let task={title: 'title.toString()' ,dateBegin: 'dateBegin.toString()', dateEnd: 'dateEnd.toString()', tags : 'tags.toString()' };
     invocation.open('POST', 'http://localhost:8080/todo', true);
@@ -106,18 +111,21 @@ function createAToDo(title,dateBegin,dateEnd,tags){
 }
 
 function createATag(title){
+  var invocation =new XMLHttpRequest();
   if(invocation){
     let tag={name: title };
     invocation.open('POST', 'http://localhost:3030', true);
     invocation.setRequestHeader('Content-Type', 'application/json');
     invocation.onreadystatechange = handlerTags;
-    invocation.send(JSON.stringify(task));
+      console.log("invocation="+invocation);
+    invocation.send(JSON.stringify(tag));
   }else{
     console.error("No Invocation TookPlace At All");
   }
 }
 
 function getATag(id){
+  var invocation =new XMLHttpRequest();
   if(invocation){
     console.log('http://localhost:3030/'+id);
     invocation.open('GET', 'http://localhost:3030/'+id, true);
@@ -179,7 +187,8 @@ res.render('createTags');
 });
 
 app.post('/createTags',function(req,res){
-  createATag(req.body.title);
+  console.log("name="+req.body.name);
+  createATag(req.body.name);
   res.render('createTagsSuccess');
 });
 

@@ -34,6 +34,7 @@ if(name!=undefined){
   let json={"id":current.toString(),"name":name};
   current++;
   data.push(json);
+  res.json(json);
   res.send("DONE");
 }
 else{
