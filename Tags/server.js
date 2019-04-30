@@ -35,7 +35,7 @@ if(name!=undefined){
   current++;
   data.push(json);
   res.json(json);
-  res.send("DONE");
+//  res.send("DONE");
 }
 else{
   res.send("ERROR");

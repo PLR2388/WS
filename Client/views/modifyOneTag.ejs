@@ -6,12 +6,13 @@
     <title>Modify this Todo</title>
   </head>
   <body>
-    <form action="updateTagForm" method="post">
+    <form action="updateSuccess" method="post">
       Ancien nom :
       <%=tag.name%>
       <br>
       <label for="name">Nouveau nom: </label>
-      <input type="text" name="name" value="" id="name">
+      <input type="text" name="name" id="name">
+      <input type="hidden" name="id" value="<%=tag.id%>">
       <input type="submit" name="" value="Valider">
     </form>
     <form action="updateTags" method="get">

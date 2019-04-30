@@ -9,8 +9,8 @@
     <form  action="updateTagForm" method="post">
     <label for="tag">Choisissez la catégorie à renommer :</label>
   <select id="tag" name="tag">
-    <% tags.forEach(function(tag){ %>
-				<option value="<%=tag.id%>"><%=tag.name%></option>
+    <% tags.forEach(function(tagy){ %>
+				<option value="<%=tagy.id%>"><%=tagy.name%></option>
 				<% }); %>
   </select>
   <input type="submit" name="" value="Valider">

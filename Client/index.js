@@ -52,7 +52,6 @@ function handlerTodos(evtXHR){
 }
 
 function getAllTags(){
-  //var invocation =new XMLHttpRequest();
   if(invocation){
     invocation.open('GET', 'http://localhost:3030/', false);
     invocation.onreadystatechange = handlerTags;
@@ -63,7 +62,6 @@ function getAllTags(){
 }
 
 function getAllToDo(){
-  var invocation =new XMLHttpRequest();
   if(invocation){
     invocation.open('GET', 'http://localhost:8080/todo', false);
     invocation.onreadystatechange = handlerTodos;
@@ -117,7 +115,6 @@ function createATag(title){
     invocation.open('POST', 'http://localhost:3030', true);
     invocation.setRequestHeader('Content-Type', 'application/json');
     invocation.onreadystatechange = handlerTags;
-      console.log("invocation="+invocation);
     invocation.send(JSON.stringify(tag));
   }else{
     console.error("No Invocation TookPlace At All");
@@ -125,12 +122,34 @@ function createATag(title){
 }
 
 function getATag(id){
-  var invocation =new XMLHttpRequest();
   if(invocation){
-    console.log('http://localhost:3030/'+id);
-    invocation.open('GET', 'http://localhost:3030/'+id, true);
+    invocation.open('GET', 'http://localhost:3030/'+id, false);
     invocation.onreadystatechange = handlerTags;
     invocation.send(null);
+  }else{
+    console.error("No Invocation TookPlace At All");
+  }
+}
+
+function deleteATag(id){
+  var invocation =new XMLHttpRequest();
+  if(invocation){
+    invocation.open('DELETE', 'http://localhost:3030/'+id, true);
+    invocation.onreadystatechange = handlerTags;
+    invocation.send(null);
+  }else{
+    console.error("No Invocation TookPlace At All");
+  }
+}
+
+function updateTag(id,title){
+  var invocation =new XMLHttpRequest();
+  if(invocation){
+    let tag={name: title };
+    invocation.open('PUT', 'http://localhost:3030/'+id, true);
+    invocation.setRequestHeader('Content-Type', 'application/json');
+    invocation.onreadystatechange = handlerTags;
+    invocation.send(JSON.stringify(tag));
   }else{
     console.error("No Invocation TookPlace At All");
   }
@@ -209,13 +228,21 @@ app.post('/updateTagForm',function(req,res){
   res.render('modifyOneTag',{'tag':tags});
 });
 
+app.post('/updateSuccess',function(req,res){
+  let name=req.body.name;
+  let id=req.body.id;
+  updateTag(id,name);
+  res.render('modifyTagSucess');
+
+});
+
 app.get('/deleteTags',function(req,res){
   getAllTags();
 res.render('deleteTag',{'tags':tags});
 });
 
 app.post('/deleteTags',function(req,res){ //Fonctionne
-  deleteAToDo(req.body.tag);
+  deleteATag(req.body.tag);
   res.render('deleteTagSuccess');
 });
 
