@@ -13,9 +13,16 @@ var current=2;  //Correspond à l'ID en cours qui s'incrémente quand l'utilisat
 * Affichage de l'élément ayant pour ID id (passage en paramètre de l'URI)
 */
 app.get('/:id', function (req, res) {
-  let id=req.params.id;
-  console.log(id);
-  res.send(data[id]);
+  let pos=-1;
+  data.forEach(function(item, index, array) {
+  if(item.id==req.params.id){
+    pos=index;
+  }
+});
+  if(pos!=-1){
+    res.send(data[pos]);
+  }
+
 });
 
 /**

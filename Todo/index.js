@@ -13,15 +13,23 @@ var current=2;  //Correspond à l'ID en cours qui s'incrémente quand l'utilisat
 * Affichage de l'élément ayant pour ID id (passage en paramètre de l'URI)
 */
 app.get('/todo/:id', function (req, res) {
-  let id=req.params.id;
-  console.log(id);
-  res.send(data[id]);
+  let pos=-1;
+  data.forEach(function(item, index, array) {
+  if(item.id===req.params.id){
+    pos=index;
+  }
+});
+if(pos!=-1){
+  res.send(data[pos]);
+}
+
 });
 
 /**
 * Affichage de tous les éléments de la todo liste
 */
 app.get('/todo',function(req,res){
+
   res.send(data);
 });
 

@@ -73,16 +73,9 @@ function getAllToDo(){
 }
 
 function getAToDo(id){
-  getAllToDo();
-  let pos=-1;
-  todo.forEach(function(item, index, array) {
-  if(item.id===id){
-    pos=index;
-  }
-});
   invocation =new XMLHttpRequest();
   if(invocation){
-    invocation.open('GET', 'http://localhost:8080/todo/'+pos, false);
+    invocation.open('GET', 'http://localhost:8080/todo/'+id, false);
     invocation.onreadystatechange = handlerTodos;
     invocation.send(null);
   }else{
@@ -128,15 +121,9 @@ function createATag(title){
 }
 
 function getATag(id){
-  getAllTags();
-  let pos=-1;
-  tags.forEach(function(item, index, array) {
-  if(item.id===id){
-    pos=index;
-  }
-});
   if(invocation){
-    invocation.open('GET', 'http://localhost:3030/'+pos, false);
+    invocation.open('GET', 'http://localhost:3030/'+id
+    , false);
     invocation.onreadystatechange = handlerTags;
     invocation.send(null);
   }else{
