@@ -6,8 +6,8 @@ class Todo{
   constructor(idcompteur,title,startDate,endDate,tags) {
   this.id=idcompteur;
   this.title=title;
-  this.startDate=startDate;
-  this.endDate=endDate;
+  this.dateBegin=startDate;
+  this.dateEnd=endDate;
   this.tags=tags;
 }
 
@@ -18,12 +18,12 @@ getTitle() {
   return this.title;
 }
 
-getStartDate() {
-  return this.startDate;
+getdateBegin() {
+  return this.dateBegin;
 }
 
-getEndDate() {
-  return this.endDate;
+getdateEnd() {
+  return this.dateEnd;
 }
 
 getTags() {
@@ -38,12 +38,12 @@ setTitle(title) {
   this.title=title;
 }
 
-setStartDate(startDate) {
-  this.startDate=startDate;
+setdateBegin(startDate) {
+  this.dateBegin=startDate;
 }
 
-setEndDate(endDate) {
-  this.endDate=endDate;
+setdateEnd(endDate) {
+  this.dateEnd=endDate;
 }
 setTags(tags) {
   this.tags=tags;

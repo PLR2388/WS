@@ -3,8 +3,8 @@ class Tag{
 * Permet de créer une tâche
 * @constructor
 */
-  constructor(idcompteur,name) {
-  this.id=idcompteur;
+  constructor(id,name) {
+  this.id=id;
   this.name=name;
 }
 

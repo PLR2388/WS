@@ -60,7 +60,6 @@ app.post('/updateToDoForm',function(req,res){
   let id=req.body.todo;
   tagss.getAllTags();
   todoss.getAToDo(id);
-  console.log("todomodify="+todo.title);
   res.render('modifyOne',{'tags': tagss.getTAG(),'todo':todoss.getDO()});
 
 });
