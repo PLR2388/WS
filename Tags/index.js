@@ -13,14 +13,18 @@ var current=2;  //Correspond à l'ID en cours qui s'incrémente quand l'utilisat
 * Affichage de l'élément ayant pour ID id (passage en paramètre de l'URI)
 */
 app.get('/:id', function (req, res) {
+  let id=parseInt(req.params.id);
   let pos=-1;
   data.forEach(function(item, index, array) {
-  if(item.id==req.params.id){
+  if(item.id==id){
     pos=index;
   }
 });
   if(pos!=-1){
-    res.send(data[pos]);
+    res.status(200).send(data[pos]);
+  }
+  else{
+    res.status(404).send('Page introuvable!');
   }
 
 });
@@ -29,7 +33,7 @@ app.get('/:id', function (req, res) {
 * Affichage de tous les éléments de la todo liste
 */
 app.get('/',function(req,res){
-  res.send(data);
+  res.status(200).send(data);
 });
 
 /**
@@ -42,10 +46,9 @@ if(name!=undefined){
   current++;
   data.push(json);
   res.json(json);
-//  res.send("DONE");
 }
 else{
-  res.send("ERROR");
+  res.status(400).send("Le nom de la nouvelle catégorie n'est pas définie!")
 }
 })
 
@@ -53,18 +56,19 @@ else{
 * Suppression de l'élément ayant pour id celui passé en paramètre
 */
 app.delete('/:id',function(req,res){
+  let id=parseInt(req.params.id);
   let pos=-1;
   data.forEach(function(item, index, array) {
-  if(item.id==req.params.id){
+  if(item.id==id){
     pos=index;
   }
 });
 if(pos!=-1){
   data.splice(pos, 1);  //Supprime 1 élément à partir de la position pos
-  res.send("SUCCESS");
+  res.status(200).send("OK");
 }
 else{
-  res.send("ECHEC");
+  res.status(400).send("La catégorie sélectionnée n'existe pas!")
 }
 });
 
@@ -72,9 +76,10 @@ else{
 * Modification d'un ou plusieurs éléments du todo dont l'id est précisé dans l'URI
 */
 app.put('/:id',function(req,res){
+  let id=parseInt(req.params.id);
   let pos=-1;
   data.forEach(function(item, index, array) {
-  if(item.id==req.params.id){
+  if(item.id==id){
     pos=index;
   }
 });
@@ -82,11 +87,14 @@ if(pos!=-1){
   let name=req.body.name;
   if(name!=undefined){
     data[pos].name=name;
+    res.status(200).send('OK');
   }
-  res.send("SUCCESS");
+  else{
+    res.status(200).send("Aucune Modification")
+  }
 }
 else{
-  res.send("ECHEC");
+  res.status(404).send("La catégorie sélectionnée n'existe pas");
 }
 
 });

@@ -1,17 +1,13 @@
-var idcompteur=1;
 class Todo{
 /**
 * Permet de créer une tâche
 * @constructor
 */
-
-
-  constructor(title,startDate,endDate,statut,tags) {
-  this.id=idcompteur++;
+  constructor(idcompteur,title,startDate,endDate,tags) {
+  this.id=idcompteur;
   this.title=title;
   this.startDate=startDate;
   this.endDate=endDate;
-  this.statut=statut;
   this.tags=tags;
 }
 
@@ -28,9 +24,6 @@ getStartDate() {
 
 getEndDate() {
   return this.endDate;
-}
-getStatut() {
-  return this.statut;
 }
 
 getTags() {
@@ -52,11 +45,6 @@ setStartDate(startDate) {
 setEndDate(endDate) {
   this.endDate=endDate;
 }
-
-setStatut(statut) {
-  this.statut=statut;
-}
-
 setTags(tags) {
   this.tags=tags;
 }

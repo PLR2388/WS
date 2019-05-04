@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--Adresse page: http://localhost:3031/createToDo-->
 <html lang="fr">
   <head>
     <meta charset="utf-8">
@@ -19,7 +20,7 @@
   <label for="tags">Catégorie:</label>
   <select id="tags" name="tags">
     <% tags.forEach(function(tag){ %>
-				<option value="<%=tag.name%>"><%=tag.name%></option>
+				<option value="<%=tag.name%>"><%=tag.name%></option> <!-- Récupération du tags-->
 				<% }); %>
   </select>
   <br>
