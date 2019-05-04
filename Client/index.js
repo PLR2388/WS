@@ -1,5 +1,6 @@
 var express=require('express');
 var parser=require('body-parser');
+
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var app=express();
 app.set('view engine', 'ejs');											//Choix de ejs comme moteur de template
@@ -18,7 +19,7 @@ function handlerTags(evtXHR){
 	try{
       	let response = JSON.parse(invocation.responseText);
         tags=response;
-		    console.log(response);
+		  //  console.log(response);
 	}catch(err){
 		console.log("invocation.responseText "+invocation.responseText);
 	}
@@ -38,7 +39,7 @@ function handlerTodos(evtXHR){
 	try{
       		let response = JSON.parse(invocation.responseText);
           todo=response;
-		console.log(response);
+	//	console.log(response);
 	}catch(err){
 		console.log("invocation.responseText "+invocation.responseText);
 	}
@@ -72,10 +73,16 @@ function getAllToDo(){
 }
 
 function getAToDo(id){
-  var invocation =new XMLHttpRequest();
+  getAllToDo();
+  let pos=-1;
+  todo.forEach(function(item, index, array) {
+  if(item.id===id){
+    pos=index;
+  }
+});
+  invocation =new XMLHttpRequest();
   if(invocation){
-    console.log('http://localhost:8080/todo/'+id);
-    invocation.open('GET', 'http://localhost:8080/todo/'+id, true);
+    invocation.open('GET', 'http://localhost:8080/todo/'+pos, false);
     invocation.onreadystatechange = handlerTodos;
     invocation.send(null);
   }else{
@@ -86,7 +93,6 @@ function getAToDo(id){
 function deleteAToDo(id){
   var invocation =new XMLHttpRequest();
   if(invocation){
-    console.log('http://localhost:8080/todo/'+id);
     invocation.open('DELETE', 'http://localhost:8080/todo/'+id, true);
     invocation.onreadystatechange = handlerTodos;
     invocation.send(null);
@@ -98,7 +104,7 @@ function deleteAToDo(id){
 function createAToDo(title,dateBegin,dateEnd,tags){
   var invocation =new XMLHttpRequest();
   if(invocation){
-    let task={title: 'title.toString()' ,dateBegin: 'dateBegin.toString()', dateEnd: 'dateEnd.toString()', tags : 'tags.toString()' };
+    let task={title: title ,dateBegin: dateBegin, dateEnd: dateEnd, tags : tags };
     invocation.open('POST', 'http://localhost:8080/todo', true);
     invocation.setRequestHeader('Content-Type', 'application/json');
     invocation.onreadystatechange = handlerTodos;
@@ -122,8 +128,15 @@ function createATag(title){
 }
 
 function getATag(id){
+  getAllTags();
+  let pos=-1;
+  tags.forEach(function(item, index, array) {
+  if(item.id===id){
+    pos=index;
+  }
+});
   if(invocation){
-    invocation.open('GET', 'http://localhost:3030/'+id, false);
+    invocation.open('GET', 'http://localhost:3030/'+pos, false);
     invocation.onreadystatechange = handlerTags;
     invocation.send(null);
   }else{
@@ -145,11 +158,60 @@ function deleteATag(id){
 function updateTag(id,title){
   var invocation =new XMLHttpRequest();
   if(invocation){
-    let tag={name: title };
+    let tag={"name": title };
     invocation.open('PUT', 'http://localhost:3030/'+id, true);
     invocation.setRequestHeader('Content-Type', 'application/json');
     invocation.onreadystatechange = handlerTags;
     invocation.send(JSON.stringify(tag));
+  }else{
+    console.error("No Invocation TookPlace At All");
+  }
+}
+
+function updateTodo(id,title,dateBegin,dateEnd,tags){
+  var invocation =new XMLHttpRequest();
+  if(invocation){
+    let todo;
+    if(title!=undefined && title!=""){
+      if(dateBegin!=undefined && dateBegin !=""){
+        if(dateEnd!=undefined && dateEnd!=""){
+          todo={"id":id, "title": title, "dateBegin": dateBegin, "dateEnd": dateEnd, "tags":tags }
+        }
+        else{
+          todo={"id":id, "title": title, "dateBegin": dateBegin, "tags":tags }
+        }
+      }
+      else{
+        if(dateEnd!=undefined && dateEnd!=""){
+          todo={"id":id, "title": title, "dateEnd": dateEnd, "tags":tags }
+        }
+        else{
+          todo={"id":id, "title": title, "tags":tags }
+        }
+      }
+    }
+    else{
+      if(dateBegin!=undefined && dateBegin!=""){
+        if(dateEnd!=undefined && dateEnd!=""){
+          todo={"id":id,"dateBegin": dateBegin, "dateEnd": dateEnd, "tags":tags }
+        }
+        else{
+          todo={"id":id,"dateBegin": dateBegin, "tags":tags }
+        }
+      }
+      else{
+        if(dateEnd!=undefined && dateEnd!=""){
+          todo={"id":id,"dateEnd": dateEnd, "tags":tags }
+        }
+        else{
+          todo={"id":id, "tags":tags }
+        }
+      }
+    }
+    invocation.open('PUT', 'http://localhost:8080/todo/'+id, true);
+    invocation.setRequestHeader('Content-Type', 'application/json');
+    invocation.onreadystatechange = handlerTodos;
+    invocation.send(JSON.stringify(todo));
   }else{
     console.error("No Invocation TookPlace At All");
   }
@@ -165,10 +227,6 @@ app.get('/createToDo',function(req,res){
 });
 
 app.post('/createToDo',function(req,res){
-  console.log("name="+req.body.name);
-  console.log("begin="+req.body.begin);
-  console.log("end="+req.body.end);
-  console.log("tags="+req.body.tags);
   createAToDo(req.body.name,req.body.begin,req.body.end,req.body.tags);
   res.render('createSuccess');
 });
@@ -185,10 +243,11 @@ app.get('/updateToDo',function(req,res){
 
 app.post('/updateToDoForm',function(req,res){
   let id=req.body.todo;
-  console.log("id="+id);
-  getAToDo(id);
   getAllTags();
-  res.render('modifyOne',{'todo':todo, 'tags': tags});
+  getAToDo(id);
+  console.log("todomodify="+todo.title);
+  res.render('modifyOne',{'tags': tags,'todo':todo});
+
 });
 
 app.get('/deleteToDo',function(req,res){
@@ -228,12 +287,21 @@ app.post('/updateTagForm',function(req,res){
   res.render('modifyOneTag',{'tag':tags});
 });
 
-app.post('/updateSuccess',function(req,res){
+app.post('/updateSuccessTag',function(req,res){
   let name=req.body.name;
   let id=req.body.id;
   updateTag(id,name);
   res.render('modifyTagSucess');
+});
 
+app.post('/updateSuccessTodo',function(req,res){
+  let id=req.body.id;
+  let title=req.body.title;
+  let dateBegin=req.body.dateBegin;
+  let dateEnd=req.body.dateEnd;
+  let tags=req.body.tags;
+  updateTodo(id,title,dateBegin,dateEnd,tags);
+  res.render('modifySucess');
 });
 
 app.get('/deleteTags',function(req,res){

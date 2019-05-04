@@ -4,8 +4,8 @@ const parser = require('body-parser');
 app.use(parser.urlencoded({ extended: false }));
 app.use(parser.json());
 
-var data=[{"id": "0", "title": "Finir le projet JEE","dateBegin": "20/03/2018", "dateEnd": "11/04/2018", "tags" : "travail" },
-{"id": "1", "title": "Réviser pour le DS d'IA","dateBegin": "10/04/2018", "dateEnd": "11/04/2018", "tags" : "travail" }];
+var data=[{"id": "0", "title": "Finir le projet JEE","dateBegin": "2018-03-20", "dateEnd": "2018-04-11", "tags" : "travail" },
+{"id": "1", "title": "Réviser pour le DS d'IA","dateBegin": "2018-04-10", "dateEnd": "2018-04-11", "tags" : "travail" }];
 
 var current=2;  //Correspond à l'ID en cours qui s'incrémente quand l'utilisateur ajoute un élément*
 
@@ -52,7 +52,7 @@ else{
 app.delete('/todo/:id',function(req,res){
   let pos=-1;
   data.forEach(function(item, index, array) {
-  if(item.id==req.params.id){
+  if(item.id===req.params.id){
     pos=index;
   }
 });
@@ -79,7 +79,6 @@ if(pos!=-1){
   let title=req.body.title;
   let dateBegin=req.body.dateBegin;
   let dateEnd=req.body.dateEnd;
-  let statut=req.body.statut;
   let tags=req.body.tags;
   if(title!=undefined){
     data[pos].title=title;
@@ -89,9 +88,6 @@ if(pos!=-1){
   }
   if(dateEnd!=undefined){
     data[pos].dateEnd=dateEnd;
-  }
-  if(statut!=undefined){
-    data[pos].statut=statut;
   }
   if(tags!=undefined){
     data[pos].tags=tags;

@@ -6,32 +6,32 @@
     <title>Modify this Todo</title>
   </head>
   <body>
-    <form action="updateToDoForm" method="post">
-      <p>Ancien nom :</p>
-      <%=todo.title%>
+    <form action="updateSuccessTodo" method="post">
+      <p>Ancien nom : <%=todo.title%></p>
       <br>
       <label for="title">Nouveau nom: </label>
       <input type="text" name="title" value="" id="title">
-      <p>Ancienne date de début :</p>
-      <%=todo.dateBegin%>
+      <p>Ancienne date de début : <%=todo.dateBegin%></p>
+
       <br>
       <label for="dateBegin">Nouvelle date de début: </label>
       <input type="date" name="dateBegin" value="" id="dateBegin">
-      <p>Ancienne date de fin :</p>
-      <%=todo.dateEnd%>
+      <p>Ancienne date de fin : <%=todo.dateEnd%></p>
+
       <br>
       <label for="dateEnd">Nouvelle date de fin: </label>
       <input type="date" name="dateEnd" value="" id="dateEnd">
-      <p>Ancienne catégorie :</p>
-      <%=todo.tags%>
+      <p>Ancienne catégorie : <%=todo.tags%></p>
+
       <br>
       <label for="tags">Nouvelle catégorie : </label>
       <select id="tags" name="tags">
         <% tags.forEach(function(tag){ %>
-            <option value="<%=tag.id%>"><%=tag.name%></option>
+            <option value="<%=tag.name%>"><%=tag.name%></option>
             <% }); %>
       </select>
       <br>
+      <input type="hidden" name="id" value="<%=todo.id%>">
       <input type="submit" name="" value="Valider">
     </form>
     <form action="updateToDo" method="get">
