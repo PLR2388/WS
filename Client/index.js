@@ -1,5 +1,5 @@
-var express=require('express');
-var parser=require('body-parser');
+var express=require('express');                     //Gérez un serveur http
+var parser=require('body-parser');                  //Module pour parser les fichiers json
 var todoss=require("./todo.js");                    //Module contenant les fonctions appellant l'API todo
 var tagss=require("./tags.js");                     //Module contenant les fonctions appellant l'API tags
 var app=express();

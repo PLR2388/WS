@@ -1,11 +1,20 @@
+/**
+* Ce fichier contient toutes les fonctions forgeant des requêtes pour l'API todo
+*/
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var invocation=new XMLHttpRequest();
-var todo={};
+var todo={};                     //Stocke les réponses de l'API todo
 
+/**
+* Cette fonction permet de récupérer l'objet todo contenant les réponses des requêtes
+*/
 exports.getDO = function() {
   return todo;
 };
 
+/**
+* Cette fonction permet de récupérer tout les todo
+*/
 exports.getAllToDo = function(){
   if(invocation){
     invocation.open('GET', 'http://localhost:8080/todo', false);
@@ -33,6 +42,9 @@ exports.getAllToDo = function(){
   }
 }
 
+/**
+* Cette fonction permet de récupérer un todo connaissant son id
+*/
 exports.getAToDo =function(id){
   invocation =new XMLHttpRequest();
   if(invocation){
@@ -61,6 +73,9 @@ exports.getAToDo =function(id){
   }
 }
 
+/**
+* Cette fonction permet de supprimer un todo connaissant son id
+*/
 exports.deleteAToDo = function (id){
   var invocation =new XMLHttpRequest();
   if(invocation){
@@ -89,6 +104,9 @@ exports.deleteAToDo = function (id){
   }
 }
 
+/**
+* Cette fonction permet de créer un todo en fonction de ce que l'utilisateur a rentré
+*/
 exports.createAToDo= function (title,dateBegin,dateEnd,tags){
   var invocation =new XMLHttpRequest();
   if(invocation){
@@ -118,6 +136,9 @@ exports.createAToDo= function (title,dateBegin,dateEnd,tags){
   }
 }
 
+/**
+* Cette fonction permet de mettre à jour une tâche
+*/
 exports.updateToDo= function (id,title,dateBegin,dateEnd,tags){
   var invocation =new XMLHttpRequest();
   if(invocation){
